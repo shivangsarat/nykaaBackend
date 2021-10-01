@@ -5,19 +5,26 @@ const app = express();
 
 app.use(cors())
  
-const file = './products-dataset.json'
+var file = require('./products-dataset.json')
 app.get('/', function (req, res) {
     console.log("/ called");
-    const data = fs.readFile(file, (err, data) => {
-        if (err) {
-            console.log("error", err);
-            res.send(err);
-        } else {
-            console.log("successfull");
-            res.send(data)
-        }
-    })
-//   res.send('Hello World')
+    res.send(200).json(file);
+})
+
+app.get('/:id', function (req, res) {
+    const id = req.params.id;
+    if (isNAN(id)) {
+        res.status(400).send("INVALID")
+    }
+    console.log(`/${id} called`);
+    const data = file.filter(i => {
+        return i.id === Number(id)
+    })[0];
+    if (data) {
+        res.status(200).json(data)
+    } else {
+        res.status(404).send("NOT_FOUND")
+    }
 })
  
 app.listen(5000)
