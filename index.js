@@ -14,7 +14,7 @@ app.get('/', function (req, res) {
 app.get('/:id', function (req, res) {
     const id = req.params.id;
     if (isNAN(id)) {
-        res.status(400).send("INVALID")
+        res.status(400).send("INVALID ID - CHECK Again")
     }
     console.log(`/${id} called`);
     const data = file.filter(i => {
@@ -23,7 +23,7 @@ app.get('/:id', function (req, res) {
     if (data) {
         res.status(200).json(data)
     } else {
-        res.status(404).send("NOT_FOUND")
+        res.status(404).send("Item NOT FOUND")
     }
 })
  
