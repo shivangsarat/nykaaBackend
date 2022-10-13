@@ -26,5 +26,17 @@ app.get('/:id', function (req, res) {
         res.status(404).send("NOT_FOUND")
     }
 })
+
+
+app.get('/inStock', function (req, res) {
+    const data = file.filter(i => {
+        return i.isOutOfStock === 0
+    })[0];
+    if (data) {
+        res.status(200).json(data)
+    } else {
+        res.status(404).send("NOT_FOUND")
+    }
+})
  
 app.listen(5000)
